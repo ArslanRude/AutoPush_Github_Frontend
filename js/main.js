@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('on'));
-      
+
       tab.classList.add('active');
       const targetPanel = document.getElementById(`tab-${tab.dataset.tab}`);
       if (targetPanel) targetPanel.classList.add('on');
@@ -30,6 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
       topicInput.focus();
     });
   });
+
+  const brandLogo = document.getElementById('brandLogo');
+
+  // Handle Brand Logo Click (Return to Home)
+  if (brandLogo) {
+    brandLogo.addEventListener('click', (e) => {
+      e.preventDefault();
+      UI.clearError();
+      UI.showView('compose');
+    });
+  }
 
   // Handle New Generation Button
   newRunBtn.addEventListener('click', () => {

@@ -68,42 +68,96 @@ body {
   gap: 11px;
 }
 
-.mark {
-  width: 24px;
-  height: 24px;
-  border-radius: 7px;
-  background: var(--accent-ink);
+/* Brand Logo Component */
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink-0);
+  transition: opacity 0.15s ease;
+}
+
+.brand-logo:hover {
+  opacity: 0.92;
+}
+
+.logo-mark {
   position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 0 0 auto;
 }
 
-.mark::after {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 5px;
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  background: var(--gold);
+.logo-mark svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+  overflow: visible;
 }
 
-.mark::before {
-  content: "";
-  position: absolute;
-  left: 9px;
-  top: 11px;
-  width: 6px;
-  height: 6px;
-  border-radius: 1px;
-  background: rgba(255, 255, 255, 0.55);
+.logo-bg {
+  fill: url(#logo-gradient, var(--accent-ink));
+  background: linear-gradient(135deg, #2F5233 0%, #162B1A 100%);
+  transition: filter 0.2s ease, transform 0.2s ease;
 }
 
-.brand {
+.logo-mark:hover .logo-bg,
+.brand-logo:hover .logo-bg {
+  filter: drop-shadow(0 2px 8px rgba(47, 82, 51, 0.4));
+}
+
+.logo-arrow {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.brand-logo:hover .logo-arrow {
+  transform: translateX(1.5px);
+}
+
+.logo-spark {
+  animation: pulseSpark 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseSpark {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+}
+
+.brand-text {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 17px;
-  letter-spacing: 0.1px;
+  font-size: 18px;
+  letter-spacing: -0.2px;
+  color: var(--ink-0);
+}
+
+.brand-accent {
+  color: var(--accent);
+  font-style: italic;
+  margin-left: 1px;
+}
+
+.brand-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--accent-ink);
+  background: var(--accent-tint);
+  border: 1px solid var(--accent-line);
+  padding: 1.5px 6px;
+  border-radius: 10px;
+  letter-spacing: 0.04em;
 }
 
 .topbar-right {
