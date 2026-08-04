@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AutoPush - Multi-Agent Code Generation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="mark"></div>
+      <div class="brand">AutoPush</div>
+      <div class="topbar-right">
+        <div class="api-pill">
+          <span class="dot"></span>
+          <input type="text" id="apiUrl" value="http://localhost:8000/generate" placeholder="API Endpoint">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- View 1: Compose / Input -->
+    <section class="view on" id="view-compose">
+      <div class="hero">
+        <h1>Describe it once.<br><em>AutoPush</em> builds the rest.</h1>
+        <p>From a single idea, AutoPush refines the concept, designs the architecture, writes every file, and hands you a working project.</p>
+      </div>
+
+      <div class="compose-container">
+        <div class="error-box" id="errorBox"></div>
+        
+        <form class="compose" id="generateForm" onsubmit="return false;">
+          <div class="compose-inner">
+            <label for="topic">Topic</label>
+            <div class="hint">What should this project be? Leave blank to let the agent choose.</div>
+            <input type="text" id="topic" placeholder="A CLI that turns a folder of markdown notes into a searchable static site">
+            
+            <div class="divider-h"></div>
+            
+            <label for="description">Additional detail</label>
+            <div class="hint">Optional — constraints, tech preferences, or context</div>
+            <textarea id="description" placeholder="Any starting context for the agent..."></textarea>
+          </div>
+
+          <div class="compose-foot">
+            <div class="chip-row">
+              <span class="chip">Reflexion loop</span>
+              <span class="chip">Auto-architected</span>
+            </div>
+            <button type="submit" class="btn-generate" id="submitBtn">
+              <span>Generate project</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="examples">
+        <div class="examples-h">Or start from an idea</div>
+        <div class="example-row" id="exampleChips">
+          <button type="button" class="example-chip">Slack thread summarizer</button>
+          <button type="button" class="example-chip">Habit tracker API</button>
+          <button type="button" class="example-chip">Invoice reminder bot</button>
+          <button type="button" class="example-chip">Markdown → static site</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 2: Loading State -->
+    <section class="view" id="view-loading">
+      <div class="loading-view">
+        <div class="loader-ring"></div>
+        <h2 class="loading-title">Building your project</h2>
+        <div class="loading-sub" id="loadingText">Refining the topic...</div>
+        <p class="loading-note">This runs the full agent graph — refinement, architecture, and code generation. It can take a minute or two.</p>
+      </div>
+    </section>
+
+    <!-- View 3: Results Display -->
+    <section class="view" id="view-results">
+      <div class="results-wrap">
+        <header class="results-header">
+          <div class="repo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+              <path d="M4 12l6 6L20 6"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="repo-name" id="repoName">Project</h2>
+            <div class="repo-meta">
+              <span class="badge">Generated</span>
+              <span id="fileCount">— files</span>
+            </div>
+          </div>
+          <div class="results-actions">
+            <button class="btn-outline" id="newRunBtn">New generation</button>
+          </div>
+        </header>
+
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="overview" role="tab">Overview</button>
+          <button class="tab" data-tab="workflow" role="tab">Workflow</button>
+          <button class="tab" data-tab="files" role="tab">Files</button>
+        </div>
+
+        <!-- Tab 1: Overview -->
+        <div class="tab-panel on" id="tab-overview">
+          <div class="overview-grid">
+            <div class="card">
+              <div class="card-h">Description</div>
+              <div class="desc-text" id="outDescription"></div>
+            </div>
+            <div class="card">
+              <div class="card-h">Summary</div>
+              <div class="stat-list" id="statList"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Workflow -->
+        <div class="tab-panel" id="tab-workflow">
+          <div class="card" id="workflowCard"></div>
+        </div>
+
+        <!-- Tab 3: Files -->
+        <div class="tab-panel" id="tab-files">
+          <div class="file-layout">
+            <aside class="file-list" id="fileList"></aside>
+            <main class="file-view">
+              <div class="file-path" id="filePath">
+                <span>Select a file</span>
+              </div>
+              <pre class="file-code" id="fileCode"></pre>
+            </main>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modular Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
